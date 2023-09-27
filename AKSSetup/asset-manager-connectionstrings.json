@@ -1,0 +1,9 @@
+{
+    "Database": {
+        "Api": "BlobStorage",
+        "Name": "assetsdb"
+    },
+    "ConnectionStrings": {
+        "AssetsDb": "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=1177saproject3;AccountKey=enA0xlEbWjPwO1GaWeKDY62lc02OVC8HcwXHZ4PuL8D9VsA/K4ghk0CX9HtkOqSERL8fArLmwknb+AStA/2F/Q==;BlobEndpoint=https://1177saproject3.blob.core.windows.net/;FileEndpoint=https://1177saproject3.file.core.windows.net/;QueueEndpoint=https://1177saproject3.queue.core.windows.net/;TableEndpoint=https://1177saproject3.table.core.windows.net/"
+    }
+}

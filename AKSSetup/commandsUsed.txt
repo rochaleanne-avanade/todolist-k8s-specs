@@ -1,0 +1,33 @@
+/subscriptions/25e705a0-08e8-4476-9d4e-70c93d980397/resourceGroups/labs-project3/providers/Microsoft.Network/virtualNetworks/appnet
+
+az aks create -g labs-project3 -n aks06 --node-count 2 --enable-addons azure-keyvault-secrets-provider --enable-managed-identity --network-plugin azure --vnet-subnet-id '/subscriptions/25e705a0-08e8-4476-9d4e-70c93d980397/resourceGroups/labs-project3/providers/Microsoft.Network/virtualNetworks/appnet' -l eastus
+
+az aks create -g labs-project3 -n aks06 --node-count 2 --enable-addons azure-keyvault-secrets-provider --enable-managed-identity --network-plugin azure --vnet-subnet-id "/subscriptions/25e705a0-08e8-4476-9d4e-70c93d980397/resourceGroups/labs-project3/providers/Microsoft.Network/virtualNetworks/appnet/subnets/aks" -l eastus
+
+
+az storage account create -g labs-project3 --sku Standard_ZRS -l eastus -n 1177saproject3
+
+az storage container create -n assetsdb -g labs-project3 --account-name 1177saproject3
+
+az storage account show-connection-string -o tsv -g labs-project3 --name 1177saproject3
+
+DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=1177saproject3;AccountKey=enA0xlEbWjPwO1GaWeKDY62lc02OVC8HcwXHZ4PuL8D9VsA/K4ghk0CX9HtkOqSERL8fArLmwknb+AStA/2F/Q==;BlobEndpoint=https://1177saproject3.blob.core.windows.net/;FileEndpoint=https://1177saproject3.file.core.windows.net/;QueueEndpoint=https://1177saproject3.queue.core.windows.net/;TableEndpoint=https://1177saproject3.table.core.windows.net/
+
+az keyvault create -g labs-project3 -l eastus -n kvproject31177
+
+az keyvault secret set --name asset-manager-connectionstrings  --file asset-manager-connectionstrings.json --vault-name kvproject31177
+
+az keyvault secret show --name asset-manager-connectionstrings  --vault-name kvproject31177
+
+az network vnet subnet update -g labs-project3 --vnet-name appnet --name aks --service-endpoints Microsoft.KeyVault Microsoft.Storage
+
+az keyvault network-rule add --vnet-name appnet --subnet aks -g labs-project3 --name kvproject31177
+
+az keyvault update --default-action 'Deny' -g labs-project3 -n kvproject31177
+
+az keyvault network-rule list -g labs-project3 --name kvproject31177
+
+az aks show -g labs-project3 -n aks06 --query addonProfiles.azureKeyvaultSecretsProvider.identity.clientId -o tsv
+3246eb8e-055c-410a-a50c-3aa64c2b45e1
+
+az keyvault set-policy --secret-permissions get --spn "3246eb8e-055c-410a-a50c-3aa64c2b45e1" -n kvproject31177
